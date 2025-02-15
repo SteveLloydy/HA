@@ -40,7 +40,7 @@ blueprint:
           min: 0
           max: 15
           step: 0.5
-  source_url: https://github.com/kvanbiesen/HASonoffAutomation/calib_trv_external_temp.yaml
+  source_url: https://github.com/SteveLloydy/HA/blob/main/SonoffTRVOffset.yaml
 alias: Calibrate Sonoff TRVs
 description: ''
 variables:
@@ -78,7 +78,7 @@ action:
     sequence:
     - variables:
         climate_name: "{{ repeat.item }}"
-        device_calib: "number.{{ climate_name.removeprefix('climate.') }}_local_temperature_offset"
+        device_calib: "number.{{ climate_name.removesuffix('_thermostat').removeprefix('climate.') }}_local_temperature_offset"
         external_temp: "{{ states(external_temperature) | float() }}"
         local_temp: "{{ state_attr(climate_name, 'current_temperature') | float() }}"
         target_temp: "{{ state_attr(climate_name, 'temperature') | float() }}"
